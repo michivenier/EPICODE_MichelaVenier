@@ -1,0 +1,28 @@
+{
+	"rubrica":[
+		{"Titolo":"Sig.ra",
+		"First Name":"Michela",
+		"Last Name":"Venier",
+		"Mobile Phone":"00393457649750",
+		"E-mail Address":"michela.venier@studente.com",
+		"Job":"studente",
+		"macchina":"chevrolet",
+		"data di nascita":"07/02/1990",
+		"altezza":"170",
+		"occhi":"marroni"
+		},
+		{
+		"Titolo":"Sig.",
+		"First Name":"Mario",
+		"Last Name":"Rossi",
+		"Mobile Phone":"0039123456789",
+		"E-mail Address":"mario.rossi@studente.com",
+		"Job":"meccanico",
+		"macchina":["ford fiesta","pegeout208"],
+		"data di nascita":"07/02/1990",
+		"altezza":"185",
+		"occhi":"blu"
+		}
+	]
+}
+	
