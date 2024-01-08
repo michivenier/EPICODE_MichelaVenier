@@ -1,0 +1,285 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 -- 1. create a table\
+CREATE TABLE VENDITE (\
+    ID_transazione INTEGER PRIMARY KEY,\
+    Categoria_prodotto TEXT (50),\
+    Costo_prodotto DOUBLE,\
+    Sconto_applicato DOUBLE\
+);\
+CREATE TABLE DETTAGLI_VENDITE (\
+    ID_transazione INTEGER, \
+    Data_transazione DATE,\
+    Quantita_merce INTEGER\
+);\
+-- 2. insert some values\
+INSERT INTO VENDITE VALUES \
+    (01, 'Panettone',18.90, 0.55),\
+    (02, 'Panettone',15.60, 0.50),\
+    (03, 'Panettone',11.10, 0.10),\
+    (04, 'Panettone',22.20, 0.15),\
+    (11, 'Pandoro',12.90, 0.15),\
+    (12, 'Pandoro',16.50, 0.10),\
+    (13, 'Pandoro',17.30, 0.25),\
+    (14, 'Pandoro',21.20, 0.22),\
+    (15, 'Pandoro',8.90, 0.10),\
+    (21, 'Mandorlato',9.90, 0.05),\
+    (22, 'Mandorlato',11.10, 0.25),\
+    (23, 'Mandorlato',16.40, 0.50),\
+    (24, 'Mandorlato',23.30, 0.60),\
+    (31, 'Detersivo',11.30, 0.40),\
+    (32, 'Detersivo',9.10, 0.20),\
+    (33, 'Detersivo',19.10, 0.25),\
+    (34, 'Detersivo',12.20, 0.15),\
+    (41, 'Tovaglioli',3.50, 0.60),\
+    (42, 'Tovaglioli',4.25, 0.30),\
+    (43, 'Tovaglioli',2.00, 0.10),\
+    (44, 'Tovaglioli',1.50, 0.05);\
+\
+INSERT INTO DETTAGLI_VENDITE VALUES \
+    (01, '2023-01-22',2),\
+    (01, '2023-02-21',1),\
+    (02, '2023-03-22',2),\
+    (03, '2023-04-23',4),\
+    (04, '2023-12-22',3),\
+    (11, '2023-02-21',2),\
+    (12, '2023-03-26',5),\
+    (13, '2023-05-18',4),\
+    (13, '2023-11-23',3),\
+    (14, '2023-12-27',14),\
+    (15, '2023-06-22',20),\
+    (15, '2023-12-23',22),\
+    (15, '2023-12-10',2),\
+    (15, '2023-10-20',1),\
+    (15, '2023-11-02',3),\
+    (21, '2023-02-26',2),\
+    (22, '2023-05-18',2),\
+    (23, '2023-01-03',4),\
+    (23, '2023-12-17',11),\
+    (24, '2023-06-12',21),\
+    (31, '2023-02-26',22),\
+    (31, '2023-04-24',11),\
+    (32, '2023-06-03',3),\
+    (33, '2023-09-04',11),\
+    (33, '2023-10-15',6),\
+    (33, '2023-12-17',16),\
+    (34, '2023-02-12',1),\
+    (41, '2023-01-26',4),\
+    (41, '2023-05-24',29),\
+    (41, '2023-08-03',8),\
+    (43, '2023-09-04',21),\
+    (44, '2023-11-15',36),\
+    (44, '2023-12-17',21),\
+    (44, '2023-06-12',2)\
+    ;\
+    \
+-- 3.1 Seleziona tutte le vendite avvenute in una specifica data\
+SELECT *\
+FROM DETTAGLI_VENDITE\
+WHERE Data_transazione = '2023-12-23';\
+\
+SELECT *\
+FROM DETTAGLI_VENDITE\
+WHERE Data_transazione = '2023-06-12';\
+\
+-- 3.2 Elenco delle vendite con sconti maggiori del 50%\
+SELECT *\
+FROM VENDITE\
+WHERE Sconto_applicato>0.5;\
+\
+-- 4.1 Calcola il totale dei ricavi delle vendite per categoria contando gli sconti \
+SELECT V.Categoria_prodotto, SUM(D.Quantita_merce)*AVG(Costo_prodotto)-(AVG(Costo_prodotto)*AVG(Sconto_applicato)) AS Tot_ricavi_scontati_medi \
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto;\
+\
+-- Calcola il totale dei ricavi delle vendite per categoria senza sconti\
+SELECT V.Categoria_prodotto, SUM(D.Quantita_merce)*AVG(Costo_prodotto) AS Tot_ricavi_medi_non_scontati \
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto;\
+\
+-- 4.2 Calcola il totale di prodotti venduti per categoria\
+SELECT V.Categoria_prodotto, SUM(D.Quantita_merce) AS Qta_tot_merce_venduta\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto;\
+\
+-- Prova: test per capire se come lavora MYSQL con la media\
+\
+-- media dei prezzi per categoria\
+SELECT Categoria_prodotto, AVG(Costo_prodotto) AS costo_medio_categoria\
+FROM VENDITE\
+GROUP BY Categoria_prodotto;\
+\
+-- media dei prezzi per categoria usando una JOIN\
+SELECT V.Categoria_prodotto, AVG(Costo_prodotto) AS Costo_medio_cat\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto;\
+-- apparentemente in caso di JOIN, MYSQL fa la media ponderata degli elementi "Costo_prodotto" in base a quanti ne sono presenti nelle tabelle unite\
+    \
+-- media dei prezzi per categoria contando gli sconti\
+SELECT Categoria_prodotto, AVG(Costo_prodotto)-AVG(Costo_prodotto)*AVG(Sconto_applicato) AS costo_medio_scontato_categoria\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto;\
+\
+-- Indica il trimestre delle vendite\
+SELECT D.ID_transazione, V.Categoria_prodotto, QUARTER(D.Data_transazione) AS Trimestre_delle_vendite\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY D.ID_transazione, V.Categoria_prodotto, D.Data_transazione;\
+\
+-- 5.1 Seleziona le vendite del 4 trimestre (cio\'e8 lo scorso trimestre rispetto ad oggi 08.01.2024)\
+SELECT D.ID_transazione, V.Categoria_prodotto, QUARTER(D.Data_transazione) AS Vendite_trimestre_4\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY D.ID_transazione, V.Categoria_prodotto, D.Data_transazione HAVING QUARTER(D.Data_transazione)=4;\
+\
+/* -- Seleziona le vendite dello scorso trimestre: tentativo non riuscito di calcolare a partire dal trimestre attuale\
+SELECT D.ID_transazione, V.Categoria_prodotto, QUARTER(D.Data_transazione) AS Vendite_scorso_trimestre\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY D.ID_transazione, V.Categoria_prodotto, D.Data_transazione\
+    CASE\
+        WHEN QUARTER(CURRENT_DATE()) - 1 IN (0) THEN 4\
+        ELSE QUARTER(CURRENT_DATE()) - 1\
+    END AS Trimestre\
+HAVING QUARTER(D.Data_transazione)=QUARTER(CURRENT_DATE())-1;\
+*/\
+    \
+-- 5.2 Raggruppa le vendite per mese e calcola il totale delle vendite per ogni mese\
+SELECT MONTH(D.Data_transazione), SUM(D.Quantita_merce) AS Tot_merce_venduta_mese\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY MONTH(D.Data_transazione)\
+ORDER BY MONTH(D.Data_transazione) ASC;\
+\
+-- Variazione rispetto al 5.2: Raggruppo le vendite di ogni prodotto per mese e calcolo il totale delle vendite per ogni mese\
+SELECT V.Categoria_prodotto, MONTH(D.Data_transazione), SUM(D.Quantita_merce) AS Tot_merce_venduta_mese_per_categoria\
+FROM VENDITE V \
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto,MONTH(D.Data_transazione);\
+\
+-- Trova lo sconto medio della categoria\
+SELECT V.Categoria_prodotto, AVG(Sconto_applicato) AS Sconto_medio_applicato\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto\
+ORDER BY AVG(Sconto_applicato) DESC;\
+\
+-- 7. Trova la categoria con lo sconto medio pi\'f9 alto\
+SELECT V.Categoria_prodotto, AVG(Sconto_applicato) AS Sconto_medio_applicato\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto\
+ORDER BY AVG(Sconto_applicato) DESC\
+LIMIT 1;\
+\
+/*-- Tentativo errato di trovare la categoria con lo sconto medio pi\'f9 alto\
+SELECT V.Categoria_prodotto, MAX(AVG(Sconto_applicato)) AS Massimo_sconto_medio_applicato\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D\
+ON V.ID_transazione=D.ID_transazione\
+GROUP BY V.Categoria_prodotto HAVING MAX(AVG(Sconto_applicato));*/\
+\
+-- 8. Calcola l\'92incremento o decremento delle vendite mese per mese\
+SELECT\
+    Mese, Tot_merce_venduta_mese, LAG(Tot_merce_venduta_mese) OVER (ORDER BY Mese) AS Tot_merce_venduta_mese_precedente,\
+    Tot_merce_venduta_mese - LAG(Tot_merce_venduta_mese) OVER (ORDER BY Mese) AS Incremento_decremento\
+FROM (\
+    SELECT MONTH(D.Data_transazione) AS Mese, SUM(D.Quantita_merce) AS Tot_merce_venduta_mese\
+    FROM VENDITE V\
+    JOIN DETTAGLI_VENDITE D ON V.ID_transazione = D.ID_transazione\
+    GROUP BY MONTH(D.Data_transazione)\
+) AS VenditeMese\
+ORDER BY Mese ASC;\
+\
+-- 9. Confronta le vendite totali in diverse stagioni: Raggruppa le vendite per mese e calcola il totale delle vendite per stagione dove INVERNO=12,1,2 PRIMAVERA=3,4,5 ESTATE=6,7,8 AUTUNNO=9,10,11\
+SELECT\
+    CASE\
+        WHEN MONTH(D.Data_transazione) IN (12, 1, 2) THEN '1.Inverno'\
+        WHEN MONTH(D.Data_transazione) IN (3, 4, 5) THEN '2.Primavera'\
+        WHEN MONTH(D.Data_transazione) IN (6, 7, 8) THEN '3.Estate'\
+        WHEN MONTH(D.Data_transazione) IN (9, 10, 11) THEN '4.Autunno'\
+    END AS Stagione,\
+SUM(D.Quantita_merce) AS Tot_merce_venduta_trimestre\
+FROM VENDITE V\
+JOIN DETTAGLI_VENDITE D ON V.ID_transazione=D.ID_transazione\
+GROUP BY Stagione\
+ORDER BY Stagione ASC;\
+\
+-- 10. Creare una tabella clienti con i campi ID_Cliente e ID_Vendita\
+CREATE TABLE CLIENTI (\
+    ID_Cliente VARCHAR (30),\
+    ID_Vendita INTEGER\
+);\
+\
+INSERT INTO CLIENTI VALUES\
+('A001', 01),\
+('A002', 02),\
+('A003', 03),\
+('A004', 04),\
+('A001', 11),\
+('A002', 12),\
+('A003', 13),\
+('A004', 14),\
+('A004', 15),\
+('A001', 21),\
+('A002', 22),\
+('A003', 23),\
+('A004', 24),\
+('A001', 31),\
+('A002', 32),\
+('A003', 33),\
+('A001', 34),\
+('A002', 41),\
+('A003', 42),\
+('A003', 43),\
+('A004', 44);\
+\
+-- 10. Scrivi una query per trovare i top 5 clienti con il maggior numero di acquisti\
+SELECT D.Quantita_merce AS Maggior_n_acquisti, C.ID_Cliente AS Cliente \
+FROM VENDITE V \
+    JOIN DETTAGLI_VENDITE D\
+    ON V.ID_transazione=D.ID_transazione\
+        JOIN CLIENTI C\
+        ON D.ID_transazione=C.ID_Vendita\
+GROUP BY Maggior_n_acquisti, Cliente\
+ORDER BY Maggior_n_acquisti DESC\
+LIMIT 5;\
+\
+-- QUERY IN PI\'f9\
+SELECT QUARTER(NOW()) - 1 AS Trimestre_scorso;\
+\
+SELECT\
+    CASE\
+        WHEN QUARTER(NOW()) - 1 IN (0) THEN 'Primavera'\
+        WHEN QUARTER(NOW()) - 1 IN (1) THEN 'Estate'\
+        WHEN QUARTER(NOW()) - 1 IN (2) THEN 'Autunno'\
+        WHEN QUARTER(NOW()) - 1 IN (3) THEN  'Inverno'\
+    END AS Trimestre;\
+\
+SELECT\
+    CASE\
+        WHEN QUARTER(NOW()) - 1 IN (0) THEN 4\
+    END AS Trimestre;\
+}
