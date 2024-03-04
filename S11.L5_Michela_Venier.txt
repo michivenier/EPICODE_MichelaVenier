@@ -1,0 +1,13 @@
+LINK AI DATI:
+DATI GREZZI: https://docs.google.com/spreadsheets/d/1LDSmF4CHT07iG1gd75j38RqEtpmvrttm9hax_eKhc5M/edit#gid=1563194679
+ORA INIZIO E FINE: https://docs.google.com/spreadsheets/d/1yV27HyziDo5D4uJIX44EC0THtBsQ5E6YAFtAxr7Dmk0/edit#gid=0
+
+LINK DI CONDIVISIONE DASHBOARD:
+https://lookerstudio.google.com/reporting/db89640a-5564-4ba5-9620-102432975926 
+
+Ho scelto di analizzare i dati della mia attività su Duolinguo a partire dal 15/12/2023 al 03/03/2024. 
+Nel report, ho visualizzato alcune statistiche chiave, come la precisione delle mie risposte, la durata media delle lezioni, quanti giorni consecutivi che sono riuscita a mantenere lo slancio (ovvero il completamento delle lezioni), ed infine i livelli completati. Per queste informazioni basta utilizzare una scheda dati, in modo da renderle chiare e farle risaltare a prima vista.
+
+Le altre analisi della dashboard includono quali lingue ho studiato (grafico ad anello), quanti punti ho guadagnato completando 1 o più livelli consecutivamente (istogramma), una visione dettagliata dei livelli completati nel corso del tempo e come si posizionano rispetto alla media (serie temporale).
+
+Ho inoltre dedicato una pagina interamente alle lezioni di francese (che costituiscono la maggioranza delle lezioni completate), riportando un filtro delle date per permettere all'utente di vedere come si modificano alcune statistiche base (riportate come schede) nel tempo. Inoltre, nella seconda pagina ho incluso una analisi della distribuzione del punteggio guadagnato completando 1 o più livelli consecutivamente (istogramma)e la durata delle lezioni durante la settimana.
