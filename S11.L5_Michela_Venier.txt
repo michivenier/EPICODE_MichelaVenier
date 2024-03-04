@@ -11,3 +11,5 @@ Nel report, ho visualizzato alcune statistiche chiave, come la precisione delle 
 Le altre analisi della dashboard includono quali lingue ho studiato (grafico ad anello), quanti punti ho guadagnato completando 1 o più livelli consecutivamente (istogramma), una visione dettagliata dei livelli completati nel corso del tempo e come si posizionano rispetto alla media (serie temporale).
 
 Ho inoltre dedicato una pagina interamente alle lezioni di francese (che costituiscono la maggioranza delle lezioni completate), riportando un filtro delle date per permettere all'utente di vedere come si modificano alcune statistiche base (riportate come schede) nel tempo. Inoltre, nella seconda pagina ho incluso una analisi della distribuzione del punteggio guadagnato completando 1 o più livelli consecutivamente (istogramma)e la durata delle lezioni durante la settimana.
+
+Si noti che il secondo dataset (ORA INIZIO E FINE) è stato incluso ma non utilizzato, potrebbe essere utile in caso si volessero mostrare le statistiche riguardanti gli orari di utenza in duolinguo
